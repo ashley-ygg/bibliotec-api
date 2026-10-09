@@ -1,0 +1,15 @@
+{
+  "name": "bibliotec-api",
+  "version": "1.0.0",
+  "description": "API RESTful de BiblioTec (libros) con Node.js, Express y MySQL, desplegada en OCI",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "mysql2": "^3.11.3"
+  }
+}

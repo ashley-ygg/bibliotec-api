@@ -1,0 +1,189 @@
+{
+  "info": {
+    "name": "BiblioTec API v1 - Libros",
+    "description": "Coleccion de pruebas de la API RESTful de BiblioTec. Ejecutar en orden: 1 POST, 2 GET lista, 3 GET por id, 4 PUT, 5 DELETE. Cambia base_url si la IP cambia.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://40.233.23.20/api/v1"
+    },
+    {
+      "key": "id",
+      "value": "7"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. POST - Crear libro",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/libros",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "libros"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"titulo\": \"Redes de Computadoras\",\n  \"isbn\": \"9780132126953\",\n  \"anio_publicacion\": 2010,\n  \"ejemplares_disponibles\": 4,\n  \"id_categoria\": 4,\n  \"autores\": [\n    4\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Codigo 201 Created', function () { pm.response.to.have.status(201); });",
+              "var json = pm.response.json();",
+              "pm.test('Devuelve id', function () { pm.expect(json.id).to.be.a('number'); });",
+              "pm.collectionVariables.set('id', json.id);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. GET - Listar todos los libros",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/libros",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "libros"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Codigo 200 OK', function () { pm.response.to.have.status(200); });",
+              "pm.test('data es un arreglo', function () { pm.expect(pm.response.json().data).to.be.an('array'); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. GET - Obtener libro por ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/libros/{{id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "libros",
+            "{{id}}"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Codigo 200 OK', function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. PUT - Actualizar libro",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/libros/{{id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "libros",
+            "{{id}}"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"titulo\": \"Redes de Computadoras - Quinta edición\",\n  \"isbn\": \"9780132126953\",\n  \"anio_publicacion\": 2011,\n  \"ejemplares_disponibles\": 6,\n  \"id_categoria\": 4,\n  \"autores\": [\n    4\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Codigo 200 OK', function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. DELETE - Eliminar libro",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/libros/{{id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "libros",
+            "{{id}}"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Codigo 200 OK', function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
